@@ -12,6 +12,7 @@
 		C59AEEC71D5CFDCE004588A5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C59AEEC61D5CFDCE004588A5 /* ViewController.m */; };
 		C59AEECC1D5CFDCE004588A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C59AEECB1D5CFDCE004588A5 /* Assets.xcassets */; };
 		C59AEECF1D5CFDCE004588A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C59AEECD1D5CFDCE004588A5 /* LaunchScreen.storyboard */; };
+		C59AEED81D5E4B8A004588A5 /* AwesomeFloatingToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C59AEED71D5E4B8A004588A5 /* AwesomeFloatingToolbar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,8 @@
 		C59AEECB1D5CFDCE004588A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C59AEECE1D5CFDCE004588A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C59AEED01D5CFDCE004588A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C59AEED61D5E4B8A004588A5 /* AwesomeFloatingToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeFloatingToolbar.h; sourceTree = "<group>"; };
+		C59AEED71D5E4B8A004588A5 /* AwesomeFloatingToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeFloatingToolbar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +67,8 @@
 				C59AEECD1D5CFDCE004588A5 /* LaunchScreen.storyboard */,
 				C59AEED01D5CFDCE004588A5 /* Info.plist */,
 				C59AEEBF1D5CFDCE004588A5 /* Supporting Files */,
+				C59AEED61D5E4B8A004588A5 /* AwesomeFloatingToolbar.h */,
+				C59AEED71D5E4B8A004588A5 /* AwesomeFloatingToolbar.m */,
 			);
 			path = BlocBrowser;
 			sourceTree = "<group>";
@@ -148,6 +153,7 @@
 				C59AEEC71D5CFDCE004588A5 /* ViewController.m in Sources */,
 				C59AEEC41D5CFDCE004588A5 /* AppDelegate.m in Sources */,
 				C59AEEC11D5CFDCE004588A5 /* main.m in Sources */,
+				C59AEED81D5E4B8A004588A5 /* AwesomeFloatingToolbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
