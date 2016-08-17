@@ -23,7 +23,7 @@
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) AwesomeFloatingToolbar *awesomeToolbar;
-@property (nonatomic, assign) NSUInteger frameCount;
+
 
 
 @end
@@ -47,7 +47,8 @@
     self.textField.backgroundColor = [UIColor colorWithWhite:220/255.0f alpha:1];
     self.textField.delegate = self;
     
-    self.awesomeToolbar = [[AwesomeFloatingToolbar alloc] initWithFourTitles:@[kWebBrowserBackString, kWebBrowserForwardString, kWebBrowserStopString, kWebBrowserRefreshString]];
+    self.awesomeToolbar = [[AwesomeFloatingToolbar alloc] initWithFourTitles:@[kWebBrowserBackString, kWebBrowserForwardString, kWebBrowserStopString, kWebBrowserRefreshString]andFourColors:@[[UIColor colorWithRed:199/255.0 green:158/255.0 blue:203/255.0 alpha:1],[UIColor colorWithRed:255/255.0 green:105/255.0 blue:97/255.0 alpha:1],[UIColor colorWithRed:222/255.0 green:165/255.0 blue:164/255.0 alpha:1],[UIColor colorWithRed:255/255.0 green:179/255.0 blue:71/255.0 alpha:1]]];
+    
     self.awesomeToolbar.delegate = self;
     
     
@@ -87,6 +88,76 @@
     
 }
 
+- (void) floatingToolbar:(AwesomeFloatingToolbar *)toolbar didTryToPanWithOffset:(CGPoint)offset {
+    CGPoint startingPoint = toolbar.frame.origin;
+    CGPoint newPoint = CGPointMake(startingPoint.x + offset.x, startingPoint.y + offset.y);
+    
+    CGRect potentialNewFrame = CGRectMake(newPoint.x, newPoint.y, CGRectGetWidth(toolbar.frame), CGRectGetHeight(toolbar.frame));
+    
+    if (CGRectContainsRect(self.view.bounds, potentialNewFrame)) {
+        toolbar.frame = potentialNewFrame;
+    }
+}
+
+- (void)didTryToPinchWithScale:(UIPinchGestureRecognizer *)gestureRecognizer
+{
+    [self didTryToPinchWithScale:gestureRecognizer];
+    
+    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+        [gestureRecognizer view].transform = CGAffineTransformScale([[gestureRecognizer view] transform], [gestureRecognizer scale], [gestureRecognizer scale]);
+        [gestureRecognizer setScale:1];
+    }
+    
+    /*
+     Get the view's current transform
+     Scale the transform
+     Set it back
+     */
+    
+//    CGAffineTransform transform = toolbar.transform;
+//    transform = CGAffineTransformScale(transform, scale, scale);
+//    toolbar.transform = transform;
+}
+
+-(void) floatingToolbar:(AwesomeFloatingToolbar *)toolbar didTryToPressWithColors:(NSArray *)colors{
+    
+    NSMutableArray *rotatedColors = [[NSMutableArray alloc] init];
+    UIColor *firstColor = [[UIColor alloc] init];
+    
+    for (UIColor *color in colors){
+        if (color == [colors firstObject]){
+            firstColor = color;
+        }else{
+            [rotatedColors addObject:color];
+        }
+    }
+    [rotatedColors addObject:firstColor];
+    NSArray *newColorSet = [rotatedColors copy];
+    
+    
+    
+    NSLog(@"rotate!");
+    
+    UIView *mainView = [UIView new];
+    self.awesomeToolbar = [[AwesomeFloatingToolbar alloc] initWithFourTitles:@[kWebBrowserBackString, kWebBrowserForwardString, kWebBrowserStopString, kWebBrowserRefreshString] andFourColors:newColorSet];
+    
+    self.awesomeToolbar.delegate = self;
+    
+    for (UIView *viewToAdd in @[self.webView, self.textField, self.awesomeToolbar]) {
+        [mainView addSubview:viewToAdd];
+    }
+    
+    
+    
+    self.view = mainView;
+    
+    self.awesomeToolbar.frame = toolbar.frame;
+    
+}
+
+
+
+
 #pragma mark - AwesomeFloatingToolbarDelegate
 
 - (void) floatingToolbar:(AwesomeFloatingToolbar *)toolbar didSelectButtonWithTitle:(NSString *)title {
@@ -97,6 +168,22 @@
     } else if ([title isEqual:kWebBrowserStopString]) {
         [self.webView stopLoading];
     } else if ([title isEqual:kWebBrowserRefreshString]) {
+        [self.webView reload];
+    }
+}
+
+-(void)floatingToolbar:(AwesomeFloatingToolbar *)toolbar didTryToClickButtonWithLabel:(UILabel *)label{
+    
+    if ([label.text isEqual:kWebBrowserBackString]) {
+        [self.webView goBack];
+        
+    } else if ([label.text isEqual:kWebBrowserForwardString]) {
+        [self.webView goForward];
+        
+    } else if ([label.text isEqual:kWebBrowserStopString]) {
+        [self.webView stopLoading];
+        
+    } else if ([label.text isEqual:kWebBrowserRefreshString]) {
         [self.webView reload];
     }
 }
